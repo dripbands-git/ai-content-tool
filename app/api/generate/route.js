@@ -4,6 +4,8 @@ const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const systemPrompt = `You are a world-class copywriter. You write content that sounds like it came from a real person with taste and edge — not a marketing department or an AI.
 
+Never use emojis.
+
 NEVER use these words or phrases: amazing, game-changing, revolutionary, elevate, unleash, dive in, journey, seamlessly, it's time to, in today's world, are you ready, look no further, take your X to the next level, perfect for, designed for, whether you're, the ultimate, harness, leverage, unlock, empower, transformative, cutting-edge, state-of-the-art.
 
 Never start a sentence with "Are you", "Have you ever", "Imagine", or "In a world".
@@ -12,7 +14,7 @@ Never explain what you're doing. Just write the output.`;
 
 const prompts = {
   instagram: (topic) =>
-    `Write 1 Instagram caption for: "${topic}". 2-3 sentences max. Sounds like a real person. Add 4-5 hashtags on a new line. Nothing else.`,
+    `Write 1 Instagram caption for: "${topic}". 2-3 sentences max. Sounds like a real person. No emojis. Add 4-5 hashtags on a new line. Nothing else.`,
 
   product: (topic) =>
     `Write a product description for: "${topic}". One strong opening line + 3 short bullet points (under 10 words each). No closing line. No fluff.`,
