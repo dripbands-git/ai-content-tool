@@ -12,30 +12,19 @@ Never explain what you're doing. Just write the output.`;
 
 const prompts = {
   instagram: (topic) =>
-    `Write 2 Instagram captions for: "${topic}".
-
-Caption 1: 2-3 sentences, conversational tone, sounds like a real person posted it. Add 4-5 hashtags on a new line.
-Caption 2: 1-2 sentences max, confident and direct. Add 4-5 hashtags on a new line.
-
-Separate the two captions with a blank line. No labels, no numbers. Just the captions.`,
+    `Write 1 Instagram caption for: "${topic}". 2-3 sentences max. Sounds like a real person. Add 4-5 hashtags on a new line. Nothing else.`,
 
   product: (topic) =>
-    `Write a product description for: "${topic}".
-
-- One punchy opening line that leads with the main benefit (not a feature)
-- 3 bullet points, each under 12 words, focused on what the customer gains
-- One closing line that makes them want to buy without being pushy
-
-No fluff. No hype. Sound like a brand with confidence, not a salesperson.`,
+    `Write a product description for: "${topic}". One strong opening line + 3 short bullet points (under 10 words each). No closing line. No fluff.`,
 
   script: (topic) =>
-    `Write a short video script for: "${topic}". This will be spoken out loud on TikTok or Instagram Reels.
+    `Write a 30-second video script for: "${topic}".
 
-HOOK: (1-2 sentences, first 3 seconds — make someone stop scrolling. Be specific, not vague.)
-BODY: (3 points, each 1 sentence. Fast, punchy, no filler.)
-CTA: (1 sentence, natural and direct — not "smash that like button")
+HOOK: (1 sentence)
+BODY: (2-3 punchy points, 1 sentence each)
+CTA: (1 sentence)
 
-Write word-for-word what the person says. Keep the total under 60 seconds when read aloud.`,
+Word-for-word. Short. No filler.`,
 };
 
 export async function POST(request) {
