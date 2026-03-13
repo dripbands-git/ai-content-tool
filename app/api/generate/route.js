@@ -2,43 +2,40 @@ import Anthropic from "@anthropic-ai/sdk";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+const systemPrompt = `You are a world-class copywriter. You write content that sounds like it came from a real person with taste and edge — not a marketing department or an AI.
+
+NEVER use these words or phrases: amazing, game-changing, revolutionary, elevate, unleash, dive in, journey, seamlessly, it's time to, in today's world, are you ready, look no further, take your X to the next level, perfect for, designed for, whether you're, the ultimate, harness, leverage, unlock, empower, transformative, cutting-edge, state-of-the-art.
+
+Never start a sentence with "Are you", "Have you ever", "Imagine", or "In a world".
+Never use exclamation marks unless it's a very casual caption.
+Never explain what you're doing. Just write the output.`;
+
 const prompts = {
   instagram: (topic) =>
-    `You are a professional social media strategist who writes for real brands and creators. Write 2 Instagram captions for: "${topic}".
+    `Write 2 Instagram captions for: "${topic}".
 
-Rules:
-- Write like a human, not a robot. No generic phrases like "In a world where..." or "Are you ready to..."
-- Be specific, confident, and direct
-- First caption: conversational and relatable (2-3 sentences + 5 targeted hashtags)
-- Second caption: punchy and bold (1-2 sentences + 5 targeted hashtags)
-- Emojis only where they feel natural, not forced
-- No numbering headers, just separate with a blank line
+Caption 1: 2-3 sentences, conversational tone, sounds like a real person posted it. Add 4-5 hashtags on a new line.
+Caption 2: 1-2 sentences max, confident and direct. Add 4-5 hashtags on a new line.
 
-Only output the captions. Nothing else.`,
+Separate the two captions with a blank line. No labels, no numbers. Just the captions.`,
 
   product: (topic) =>
-    `You are a professional copywriter for e-commerce brands. Write a product description for: "${topic}".
+    `Write a product description for: "${topic}".
 
-Rules:
-- Lead with the biggest benefit, not a feature
-- Write in a clean, confident tone — no hype words like "amazing", "revolutionary", or "game-changing"
-- Structure: 1 strong opening sentence, 3-4 benefit-led bullet points, 1 closing sentence with a subtle call to action
-- Keep it concise and scannable
-- Sound like a real brand, not a template
+- One punchy opening line that leads with the main benefit (not a feature)
+- 3 bullet points, each under 12 words, focused on what the customer gains
+- One closing line that makes them want to buy without being pushy
 
-Only output the product description. Nothing else.`,
+No fluff. No hype. Sound like a brand with confidence, not a salesperson.`,
 
   script: (topic) =>
-    `You are a professional video scriptwriter for short-form content (Reels, TikTok). Write a 45-60 second video script for: "${topic}".
+    `Write a short video script for: "${topic}". This will be spoken out loud on TikTok or Instagram Reels.
 
-Rules:
-- HOOK (first 3 seconds): Start with a bold statement or question that stops the scroll. No "Hey guys" or "Welcome back"
-- BODY: 3 tight, punchy points. Each point is 1-2 sentences max
-- CTA: One clear, natural call to action — not salesy
-- Write exactly what the creator should say out loud, word for word
-- Label each section: HOOK / BODY / CTA
+HOOK: (1-2 sentences, first 3 seconds — make someone stop scrolling. Be specific, not vague.)
+BODY: (3 points, each 1 sentence. Fast, punchy, no filler.)
+CTA: (1 sentence, natural and direct — not "smash that like button")
 
-Only output the script. Nothing else.`,
+Write word-for-word what the person says. Keep the total under 60 seconds when read aloud.`,
 };
 
 export async function POST(request) {
@@ -57,6 +54,7 @@ export async function POST(request) {
     const message = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 1024,
+      system: systemPrompt,
       messages: [{ role: "user", content: prompt(topic) }],
     });
 
